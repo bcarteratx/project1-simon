@@ -1,0 +1,31 @@
+.game {
+    display: grid;
+    grid-template-columns: 200px 200px;
+    grid-template-rows: 200px 200px;
+    grid-template-areas: 
+        "tl tr"
+        "bl br";
+
+}
+
+.lights {
+    height: 200px;
+    width: 200px;
+}
+
+#red {
+    grid-area: tl;
+    background-color: red;
+}
+#blue {
+    grid-area: tr;
+    background: blue;
+}
+#yellow {
+    grid-area: bl;
+    background: yellow;
+}
+#green {
+    grid-area: br;
+    background: green;
+}
