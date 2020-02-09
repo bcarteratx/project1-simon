@@ -17,19 +17,36 @@
     line-height: 200px;
 }
 
-.red {
+.red.off {
     grid-area: tl;
-    background-color: red;
+    background: red;
 }
-.blue {
+.blue.off {
     grid-area: tr;
     background: blue;
 }
-.yellow {
+.yellow.off {
     grid-area: bl;
     background: yellow;
 }
-.green {
+.green.off {
     grid-area: br;
     background: green;
+}
+
+.red.on {
+    grid-area: tl;
+    background: lightcoral;
+}
+.blue.on {
+    grid-area: tr;
+    background: lightskyblue;
+}
+.yellow.on {
+    grid-area: bl;
+    background: lightgoldenrodyellow;
+}
+.green.on {
+    grid-area: br;
+    background: lightgreen;
 }
