@@ -16,42 +16,70 @@ let compTurn;
 let compFlash;
 let totalRounds = 20;
 let strict = false;
-let playerRound;
+let playerRound = 1;
 let win;
 let wrongMove;
 let intervalTime;
 /*----- cached element references -----*/
 
 /*----- event listeners -----*/
-document.querySelector('.game').addEventListener('click', handlePattern);
-document.getElementById('start').addEventListener('click', startGame);
-document.getElementById('strict').addEventListener('click', handleStrict);
+red.addEventListener('click', clickedRed);
+blue.addEventListener('click', clickedBlue);
+yellow.addEventListener('click', clickedYellow);
+green.addEventListener('click', clickedGreen);
+startButton.addEventListener('click', startGame);
+strictButton.addEventListener('click', handleStrict);
 
 
 /*----- functions -----*/
 function handleStrict() {
     (strictButton.checked == true) ? strict = true : strict = false; 
+}
+function clickedRed() {
+    playerPattern.push(1);
+    redFlash();
+    matchPattern();
+  }
+function clickedBlue() {
+    playerPattern.push(2);
+    blueFlash();
+    matchPattern();
+  }
+function clickedYellow() {
+    playerPattern.push(3);
+    yellowFlash();
+    matchPattern();
+  }
+function clickedGreen() {
+    playerPattern.push(4);
+    greenFlash();
+    matchPattern();
   }
 
-function handlePattern(evt) {
-    //when color is clicked input respective value into playerorder array.
-    let lightValue = parseInt(evt.target.textContent);
-    playerPattern.push(lightValue);
-    console.log(playerPattern);
-}
-
 function getPattern() {
-    compPattern = Array.from({length: 1}, () => Math.floor(Math.random() * 4) +1);
+    compPattern = Array.from({length: 4}, () => Math.floor(Math.random() * 4) +1);
 }
 
 function matchPattern() {
-    Math.abs(playerPattern);
-    Math.abs(compPattern);
-    if (playerPattern === compPattern) {
-        playerRound += 1;
-    } else {
-        //startPattern();
-    }
+    if(compPattern.length!=playerPattern.length) {
+        return "False";
+    } else { 
+    // comapring each element of array 
+        for(var i=0;i<compPattern.length;i++) 
+        if(compPattern[i]!=playerPattern[i]) {
+        return false;
+        // if strict = true => round = 1
+        // if strict = false => restart round 
+        } else {
+            return true;
+            
+        }
+    } 
+} 
+
+function advanceRound() {
+    if (matchPattern)
+    playerRound += 1;
 }
 
 function startGame() {
@@ -73,15 +101,28 @@ function startRound() {
 
 }
 
-
-
+function redFlash() {
+    red.classList.replace('off', 'on');
+    setTimeout(() => lightsOff(), 300);
+}
+function blueFlash() {
+    blue.classList.replace('off', 'on');
+    setTimeout(() => lightsOff(), 300);
+}
+function yellowFlash() {
+    yellow.classList.replace('off', 'on');
+    setTimeout(() => lightsOff(), 300);
+}
+function greenFlash() {
+    green.classList.replace('off', 'on');
+    setTimeout(() => lightsOff(), 300);
+}
 function lightsOff() {
     red.classList.replace('on', 'off');
     blue.classList.replace('on', 'off');
     yellow.classList.replace('on', 'off');
     green.classList.replace('on', 'off');
 }
-
 function lightsOn() {
     red.classList.replace('off', 'on');
     blue.classList.replace('off', 'on');
