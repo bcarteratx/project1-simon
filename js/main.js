@@ -19,7 +19,7 @@ let wrongMove;
 let intervalTime;
 
 /*----- cached element references -----*/
-let compPattern = [1, 3, 2, 4];
+let compPattern = [1, 1, 2, 2, 3, 3, 4, 4];
 let playerPattern = [];
 let playerRound = 1;
 
@@ -63,7 +63,7 @@ function clickedGreen() {
 
 /*----- functions -----*/
 function getPattern() {
-    compPattern = Array.from({length: 4}, () => Math.floor(Math.random() * 4) +1);
+    compPattern = Array.from({length: 8}, () => Math.floor(Math.random() * 4) +1);
 }
 
 function matchPattern() {
@@ -77,8 +77,7 @@ function matchPattern() {
         // if strict = true => round = 1
         // if strict = false => restart round 
         } else {
-            return true;
-            
+            return true;  
         }
     } 
 } 
@@ -106,71 +105,27 @@ function startGame() {
 compTurn = true;
 function startRound() {
     if (compTurn) {
-        lightsOff();
-        //make function to replace greenFlash that will find correct flash color
-        compPattern.forEach(delayFlash(greenFlash,1000));
+        //lightsOff();
+        // BUG! -flashed colors do not follow compPattern
+        compPattern.forEach(delayFlash(flashColor,1000));
     }
 }
-
-
-
-// delay Flash Function will play the array with delay
-const delayFlash = (fn, delay) => {
+// delayFlash Function to run through the array with delay
+function delayFlash(fn, delay) {
     return (x, i) => {
         setTimeout(() => {
             fn(x);
         }, i * delay);
     }
 };
-//setup to loop through array and display to #message
-const output = document.querySelector("#message");
-const display = s => message.innerText = s;
-compPattern.forEach(delayFlash(display, 1000));
-//compPattern.forEach(i => console.log(i));
 
-// function step1(cb) {
-//     compPattern[0];
-//     setTimeout(function() {
-//         redFlash();
-//         cb()
-//     }, 1000);
-//   }
-// function step2(cb) {
-//     compPattern[1];
-//     setTimeout(function() {
-//       greenFlash();
-//       cb()
-//     }, 1000);
-//   }  
-// function step3(cb) {
-//     compPattern[2];
-//     setTimeout(function() {
-//       blueFlash();
-//       cb()
-//     }, 1000);
-//   }
-//   function step4(cb) {
-//     compPattern[3];
-//     setTimeout(function() {
-//       blueFlash();
-//       cb()
-//     }, 1000);
-//   }
-//   // solution (nested callback functions!)
-//   step1(function() {
-//     step2(function() {
-//       step3(function() {
-//         step4(function() {})
-//       });
-//     });
-//   });
-// function runPattern(i) {
-//     if (compPattern[i]) {
-//         console.log(compPattern[i]);
-//         setTimeout(function(){runPattern(i+1);}, 1000);
-//     }
-// }
-// runPattern();
+// figures out which color to flash for an index in the computer's pattern
+function flashColor(i) {
+    if (compPattern[i] === 1) redFlash();
+    if (compPattern[i] === 2) blueFlash();
+    if (compPattern[i] === 3) yellowFlash();
+    if (compPattern[i] === 4) greenFlash();
+}
 
 function redFlash() {
     red.classList.replace('off', 'on');
