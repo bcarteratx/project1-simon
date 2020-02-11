@@ -107,24 +107,23 @@ function startRound() {
     if (compTurn) {
         //lightsOff();
         // BUG! -flashed colors do not follow compPattern
-        compPattern.forEach(delayFlash(flashColor,1000));
+        delayFlash(compPattern);
     }
 }
 // delayFlash Function to run through the array with delay
-function delayFlash(fn, delay) {
-    return (x, i) => {
-        setTimeout(() => {
-            fn(x);
-        }, i * delay);
+
+async function delayFlash(array){
+    for(let i=0; i<array.length; i++){
+        await window.setTimeout(flashColor, 1000 *i, array[i])
     }
-};
+}
 
 // figures out which color to flash for an index in the computer's pattern
 function flashColor(i) {
-    if (compPattern[i] === 1) redFlash();
-    if (compPattern[i] === 2) blueFlash();
-    if (compPattern[i] === 3) yellowFlash();
-    if (compPattern[i] === 4) greenFlash();
+    if (i === 1) redFlash();
+    if (i === 2) blueFlash();
+    if (i === 3) yellowFlash();
+    if (i === 4) greenFlash();
 }
 
 function redFlash() {
