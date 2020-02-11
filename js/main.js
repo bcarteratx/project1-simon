@@ -19,7 +19,7 @@ let wrongMove;
 let intervalTime;
 
 /*----- cached element references -----*/
-let compPattern = [1, 1, 2, 2, 3, 3, 4, 4];
+let compPattern = [];
 let playerPattern = [];
 let playerRound = 1;
 
@@ -62,62 +62,66 @@ function clickedGreen() {
 }
 
 /*----- functions -----*/
-function getPattern() {
-    compPattern = Array.from({length: 8}, () => Math.floor(Math.random() * 4) +1);
+function startGame() {
+    render();
+    playerRound = 1;
+    win = false;
+    wrongMove = false;
+    playerPattern = [];
+    getRandom();
+    compTurn = true;
+    compFlash = 1;
+    //all lights flash to indicate game start
+    //intervalTime = setInterval(compTurn, 500);
+    //flashLights();
+    //playPattern() {light up elements by compPatern}
+    console.log(compPattern);
+    compTurn = true;
+    runCompPattern();
+    //players turn to match pattern
+    //wait then run matchPattern();
+    
 }
 
+function nextRound() {
+    compPattern.push(Math.floor(Math.random() * 4) +1);
+    playerPattern = [];
+    runCompPattern();
+    console.log(compPattern);
+    //runCompPattern();
+}
+
+function runCompPattern() {
+    if (compTurn) { 
+        delayFlash(compPattern);
+    }
+}
+function getRandom() {
+    compPattern = Array.from({length: 1}, () => Math.floor(Math.random() * 4) +1);
+}
 function matchPattern() {
     if(compPattern.length!=playerPattern.length) {
         return "False";
     } else { 
-    // comapring each element of array 
+        // comapring each element of array 
         for(var i=0;i<compPattern.length;i++) 
         if(compPattern[i]!=playerPattern[i]) {
-        return false;
-        // if strict = true => round = 1
-        // if strict = false => restart round 
+            return false;
+            // if strict = true => round = 1
+            // if strict = false => restart round 
         } else {
-            return true;  
+            playerRound += 1; 
+            render();
+            return true;
         }
     } 
 } 
-
-function advanceRound() {
-    if (matchPattern)
-    playerRound += 1;
-}
-
-function startGame() {
-    round.textContent = 1;
-    win = false;
-    wrongMove = false;
-    getPattern();
-    compTurn = true;
-    compFlash = 1;
-    //all lights flash to indicate game start
-    intervalTime = setInterval(compTurn, 500);
-    lightsOn();
-    lightsOff();
-    //playPattern() {light up elements by compPatern}
-    console.log(compPattern);
-    //check for 
-}
-compTurn = true;
-function startRound() {
-    if (compTurn) {
-        //lightsOff();
-        // BUG! -flashed colors do not follow compPattern
-        delayFlash(compPattern);
-    }
-}
 // delayFlash Function to run through the array with delay
-
 async function delayFlash(array){
     for(let i=0; i<array.length; i++){
         await window.setTimeout(flashColor, 1000 *i, array[i])
     }
 }
-
 // figures out which color to flash for an index in the computer's pattern
 function flashColor(i) {
     if (i === 1) redFlash();
@@ -125,7 +129,6 @@ function flashColor(i) {
     if (i === 3) yellowFlash();
     if (i === 4) greenFlash();
 }
-
 function redFlash() {
     red.classList.replace('off', 'on');
     setTimeout(() => lightsOff(), 300);
@@ -153,4 +156,11 @@ function lightsOn() {
     blue.classList.replace('off', 'on');
     yellow.classList.replace('off', 'on');
     green.classList.replace('off', 'on');
+}
+function flashLights() {
+    lightsOn();
+    setTimeout(() => lightsOff(), 800);
+}
+function render() {
+    round.textContent = playerRound;
 }
