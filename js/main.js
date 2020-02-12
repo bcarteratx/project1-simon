@@ -43,27 +43,25 @@ function handleStrict() {
 function clickedRed() {
     playerPattern.push(1);
     redFlash();
-    matchPattern();
-    console.log(playerPattern);
-    
+    matchPattern();    
 }
+
 function clickedBlue() {
     playerPattern.push(2);
     blueFlash();
     matchPattern();
-    console.log(playerPattern);
 }
+
 function clickedYellow() {
     playerPattern.push(3);
     yellowFlash();
     matchPattern();
-    console.log(playerPattern);
 }
+
 function clickedGreen() {
     playerPattern.push(4);
     greenFlash();
     matchPattern();
-    console.log(playerPattern);
 }
 
 /*----- functions -----*/
@@ -93,7 +91,6 @@ function startGame() {
 }
 
 function computerTurn(){
-    console.log(compPattern);
     //light up elements by compPattern
     compTurn = true;
     setTimeout(() => runCompPattern(), 1000);
@@ -134,6 +131,7 @@ function matchPattern() {
 function getRandom() {
     compPattern.push(Math.floor(Math.random()*4)+ 1);
 }
+
 function runCompPattern() {
     if (compTurn) { 
         delayFlash(compPattern);

@@ -1,22 +1,42 @@
+body {
+    text-align: center;
+    background-color: black;
+    color: white;
+}
+
+.outer {
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
 .game {
+    position: relative;
     display: grid;
+    margin: 0 auto;
+    gap: 15vmin;
     grid-template-columns: 200px 200px;
     grid-template-rows: 200px 200px;
     grid-template-areas: 
         "tl tr"
         "bl br";        
 }
+
 #message {
     font-size: 5vmin;
 }
 
 button {
-    height: 5vmin;
+    height: 10vmin;
     width: 10vmin;
+    border-radius: 50%;
+    background-color: rgba(156, 156, 156, 0.87);
 }
 .lights {
-    height: 200px;
-    width: 200px;
+    height: 35vmin;
+    width: 35vmin;
+    border-radius: 50%;
     font-size: 50px;
     text-align: center;
     vertical-align: middle;
@@ -25,19 +45,19 @@ button {
 
 .red.off {
     grid-area: tl;
-    background: red;
+    background: rgba(245, 31, 31, .8);
 }
 .blue.off {
     grid-area: tr;
-    background: blue;
+    background: rgba(31, 31, 224, .8);
 }
 .yellow.off {
     grid-area: bl;
-    background: yellow;
+    background: rgba(255, 226, 62, 0.8);
 }
 .green.off {
     grid-area: br;
-    background: green;
+    background: rgba(16, 146, 16, .8);
 }
 
 .red.on {

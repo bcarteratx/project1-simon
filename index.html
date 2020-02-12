@@ -5,21 +5,24 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>Document</title>
+    <link rel="stylesheet" href="animate.min.css">
     <link rel="stylesheet" href="css/main.css">
     <script defer src="js/main.js"></script>
 </head>
 <body>
     
-    <h1 id="message">SIMON</h1>
-    <h2 id="round">-</h2>
-    <div class="game">
-        <div class="lights off red" id="1">1</div>
-        <div class="lights off blue" id="2">2</div>
-        <div class="lights off yellow" id="3">3</div>
-        <div class="lights off green" id="4">4</div>
+    <h1 class="animated" id="message">SIMON</h1>
+    <h2 class="animated" id="round">-</h2>
+    <div class="outer">
+        <div class="game">
+            <div class="lights off red animated" id="1"></div>
+            <div class="lights off blue animated" id="2"></div>
+            <div class="lights off yellow animated" id="3"></div>
+            <div class="lights off green animated" id="4"></div>
+        </div>
     </div>
-    <button id="start">Start</button>
-    <input id="strict" type="checkbox">
+    <button class="animated" id="start">Start</button>
+    <input class="animated" id="strict" type="checkbox">
     <label for="strict">Strict</label>
 </body>
 </html>
