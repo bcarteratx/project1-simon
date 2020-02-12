@@ -96,9 +96,7 @@ function computerTurn(){
     console.log(compPattern);
     //light up elements by compPattern
     compTurn = true;
-    setTimeout(function() {
-        runCompPattern();
-    },1000)
+    setTimeout(() => runCompPattern(), 1000);
     //players turn to match pattern
     playerTurn = true;
     matchPattern();
@@ -117,7 +115,7 @@ function matchPattern() {
             playerPattern = [];
             document.querySelector('#message').innerHTML = 'Wrong! Watch and try again'
             multiFlash();
-            window.setTimeout(flashes = 0, 1000);
+            setTimeout(() => flashes = 0, 1000);
             setTimeout(() => runCompPattern(), 1500);
         } else {
             //window.setTimeout(flashLights(), 400);
