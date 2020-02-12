@@ -20,12 +20,12 @@ const message = document.querySelector('#message');
 const round = document.querySelector('#round');
 const startButton = document.querySelector('#start');
 const strictButton = document.querySelector("#strict");
-//sound files
+
+/*---- sound files ----*/
 const redSound = new Audio('https://s3.amazonaws.com/freecodecamp/simonSound1.mp3');
 const blueSound = new Audio('https://s3.amazonaws.com/freecodecamp/simonSound2.mp3');
 const yellowSound = new Audio('https://s3.amazonaws.com/freecodecamp/simonSound3.mp3');
 const greenSound = new Audio('https://s3.amazonaws.com/freecodecamp/simonSound4.mp3');
-
 
 /*----- event listeners -----*/
 red.addEventListener('click', clickedRed);
@@ -39,6 +39,7 @@ strictButton.addEventListener('click', handleStrict);
 function handleStrict() {
     (strictButton.checked == true) ? strict = true : strict = false; 
 }
+
 function clickedRed() {
     playerPattern.push(1);
     redFlash();
@@ -66,6 +67,14 @@ function clickedGreen() {
 }
 
 /*----- functions -----*/
+function resetGame() {
+    playerPattern = [];
+    compPattern = [];
+    playerRound = 0;
+    flashes = 0;
+    compTurn = true
+}
+
 function startGame() {
     if (playerRound < 1) {
         flashLights(800);
@@ -77,17 +86,10 @@ function startGame() {
     compTurn = true;
     playerRound += 1;
     flashes = 0;
-    document.querySelector('#message').innerHTML = 'Watch my pattern';
+    document.querySelector('#message').innerHTML = 'Watch the pattern';
     getRandom();
     setTimeout(() => computerTurn(), 1000);
     render();
-}
-function resetGame() {
-    playerPattern = [];
-    compPattern = [];
-    playerRound = 0;
-    flashes = 0;
-    compTurn = true
 }
 
 function computerTurn(){
@@ -101,14 +103,7 @@ function computerTurn(){
     playerTurn = true;
     matchPattern();
 }
-function runCompPattern() {
-    if (compTurn) { 
-        delayFlash(compPattern);
-    }
-}
-function getRandom() {
-    compPattern.push(Math.floor(Math.random()*4)+ 1);
-}
+
 function matchPattern() {
     if(compPattern.length!=playerPattern.length) {
         //wrongMove = true;
@@ -125,7 +120,7 @@ function matchPattern() {
             window.setTimeout(flashes = 0, 1000);
             setTimeout(() => runCompPattern(), 1500);
         } else {
-            window.setTimeout(flashLights(), 400);
+            //window.setTimeout(flashLights(), 400);
             document.querySelector('#message').innerHTML = `Correct! Start Round: ${playerRound + 1}`;
         }
         if (playerRound === totalRounds && wrongMove === false) {
@@ -137,12 +132,23 @@ function matchPattern() {
         }
     } 
 } 
+
+function getRandom() {
+    compPattern.push(Math.floor(Math.random()*4)+ 1);
+}
+function runCompPattern() {
+    if (compTurn) { 
+        delayFlash(compPattern);
+    }
+}
+
 // delayFlash Function to run through the array with delay
 async function delayFlash(array){
     for(let i=0; i<array.length; i++){
         await window.setTimeout(flashColor, 1000 *i, array[i])
     }
 }
+
 // figures out which color to flash for an index in the computer's pattern
 function flashColor(i) {
     if (i === 1) redFlash();
@@ -150,42 +156,50 @@ function flashColor(i) {
     if (i === 3) yellowFlash();
     if (i === 4) greenFlash();
 }
+
 function redFlash() {
     red.classList.replace('off', 'on');
     setTimeout(() => lightsOff(), 400);
     redSound.play();
 }
+
 function blueFlash() {
     blue.classList.replace('off', 'on');
     setTimeout(() => lightsOff(), 400);
     blueSound.play();
 }
+
 function yellowFlash() {
     yellow.classList.replace('off', 'on');
     setTimeout(() => lightsOff(), 400);
     yellowSound.play();
 }
+
 function greenFlash() {
     green.classList.replace('off', 'on');
     setTimeout(() => lightsOff(), 400);
     greenSound.play();
 }
+
 function lightsOff() {
     red.classList.replace('on', 'off');
     blue.classList.replace('on', 'off');
     yellow.classList.replace('on', 'off');
     green.classList.replace('on', 'off');
 }
+
 function lightsOn() {
     red.classList.replace('off', 'on');
     blue.classList.replace('off', 'on');
     yellow.classList.replace('off', 'on');
     green.classList.replace('off', 'on');
 }
+
 function flashLights(duration) {
     lightsOn();
     setTimeout(() => lightsOff(), duration);
 }
+
 function multiFlash() {
     if (flashes < 3) {
         flashes++
@@ -193,6 +207,7 @@ function multiFlash() {
     }
     flashLights()
 }
+
 function gameOver() {
     document.querySelector('message').innerHTML = `<h1>Game Over! <br>You reached level ${playerRound} <br>Try Again?</h1>`;
     userArray =[];
@@ -200,6 +215,7 @@ function gameOver() {
     count = 0;
     playerTurn = false;
 }
+
 function render() {
     round.textContent = `Round ${playerRound}`;
 }
