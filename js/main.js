@@ -1,4 +1,15 @@
-/*----- constants -----*/
+/*----- variables -----*/
+let compPattern = [];
+let playerPattern = [];
+let playerRound = 1;
+let compTurn;
+let totalRounds = 3;
+let strict = false;
+let winGame = false;
+let wrongMove = false;
+let intervalTime;
+
+/*----- cached element references -----*/
 const red = document.querySelector('.red');
 const blue = document.querySelector('.blue');
 const yellow = document.querySelector('.yellow');
@@ -9,20 +20,6 @@ const startButton = document.querySelector('#start');
 const strictButton = document.querySelector("#strict");
 //sound files
 
-/*----- app's state (variables) -----*/
-let compTurn;
-let compFlash;
-let totalRounds = 20;
-let strict = false;
-let win;
-let wrongMove;
-let intervalTime;
-
-/*----- cached element references -----*/
-let compPattern = [];
-let playerPattern = [];
-let playerRound = 1;
-
 /*----- event listeners -----*/
 red.addEventListener('click', clickedRed);
 blue.addEventListener('click', clickedBlue);
@@ -30,7 +27,6 @@ yellow.addEventListener('click', clickedYellow);
 green.addEventListener('click', clickedGreen);
 startButton.addEventListener('click', startGame);
 strictButton.addEventListener('click', handleStrict);
-
 
 /*----- eventHandlers -----*/
 function handleStrict() {
@@ -63,28 +59,37 @@ function clickedGreen() {
 
 /*----- functions -----*/
 function startGame() {
-    render();
-    playerRound = 1;
-    win = false;
-    wrongMove = false;
     playerPattern = [];
+    compTurn = true;
+    playerRound = 1;
     getRandom();
-    compTurn = true;
-    compFlash = 1;
     //all lights flash to indicate game start
-    //intervalTime = setInterval(compTurn, 500);
-    //flashLights();
-    //playPattern() {light up elements by compPatern}
-    console.log(compPattern);
-    compTurn = true;
-    runCompPattern();
-    //players turn to match pattern
-    //wait then run matchPattern();
-    
+    flashLights();
+    computerTurn();
+    render();
 }
 
+function computerTurn(){
+    console.log(compPattern);
+    //light up elements by compPattern
+    compTurn = true;
+    setTimeout(function() {
+        runCompPattern();
+    },1000)
+    //players turn to match pattern
+    //wait then run matchPattern();
+    for (var i=0;i<compPattern.length;i++) {
+        if (playerPattern[i] !== compPattern[i]) {
+            wrongMove = true;
+            runCompPattern();
+        } else {
+            setTimeout(() => nextRound(), 1000);
+        }
+    }
+}
+    
 function nextRound() {
-    compPattern.push(Math.floor(Math.random() * 4) +1);
+    getRandom();
     playerPattern = [];
     runCompPattern();
     console.log(compPattern);
@@ -97,22 +102,26 @@ function runCompPattern() {
     }
 }
 function getRandom() {
-    compPattern = Array.from({length: 1}, () => Math.floor(Math.random() * 4) +1);
+    compPattern.push(Math.floor(Math.random()*4)+ 1);
 }
 function matchPattern() {
     if(compPattern.length!=playerPattern.length) {
         return "False";
     } else { 
         // comapring each element of array 
-        for(var i=0;i<compPattern.length;i++) 
+        for(let i=0;i<compPattern.length;i++) 
         if(compPattern[i]!=playerPattern[i]) {
-            return false;
             // if strict = true => round = 1
-            // if strict = false => restart round 
+            // if strict = false => runCompPattern
+            setTimeout(() => runCompPattern(), 1000);
+            playerPattern = [];
         } else {
             playerRound += 1; 
             render();
             return true;
+        }
+        if (playerRound === totalRounds) {
+            winGame = true;
         }
     } 
 } 
@@ -131,19 +140,19 @@ function flashColor(i) {
 }
 function redFlash() {
     red.classList.replace('off', 'on');
-    setTimeout(() => lightsOff(), 300);
+    setTimeout(() => lightsOff(), 400);
 }
 function blueFlash() {
     blue.classList.replace('off', 'on');
-    setTimeout(() => lightsOff(), 300);
+    setTimeout(() => lightsOff(), 400);
 }
 function yellowFlash() {
     yellow.classList.replace('off', 'on');
-    setTimeout(() => lightsOff(), 300);
+    setTimeout(() => lightsOff(), 400);
 }
 function greenFlash() {
     green.classList.replace('off', 'on');
-    setTimeout(() => lightsOff(), 300);
+    setTimeout(() => lightsOff(), 400);
 }
 function lightsOff() {
     red.classList.replace('on', 'off');
