@@ -4,11 +4,12 @@ let playerPattern = [];
 let playerRound = 0;
 let compTurn;
 let playerTurn;
-let totalRounds = 3;
+let totalRounds = 5;
 let strict = false;
 let winGame = false;
 let wrongMove = false;
 let intervalTime;
+let flashes = 1;
 
 /*----- cached element references -----*/
 const red = document.querySelector('.red');
@@ -20,6 +21,11 @@ const round = document.querySelector('#round');
 const startButton = document.querySelector('#start');
 const strictButton = document.querySelector("#strict");
 //sound files
+const redSound = new Audio('https://s3.amazonaws.com/freecodecamp/simonSound1.mp3');
+const blueSound = new Audio('https://s3.amazonaws.com/freecodecamp/simonSound2.mp3');
+const yellowSound = new Audio('https://s3.amazonaws.com/freecodecamp/simonSound3.mp3');
+const greenSound = new Audio('https://s3.amazonaws.com/freecodecamp/simonSound4.mp3');
+
 
 /*----- event listeners -----*/
 red.addEventListener('click', clickedRed);
@@ -38,6 +44,7 @@ function clickedRed() {
     redFlash();
     matchPattern();
     console.log(playerPattern);
+    
 }
 function clickedBlue() {
     playerPattern.push(2);
@@ -60,18 +67,27 @@ function clickedGreen() {
 
 /*----- functions -----*/
 function startGame() {
-    //all lights flash to indicate game start
-    flashLights();
+    if (playerRound < 1) {
+        flashLights(800);
+    }
+    // if (playerTurn) {
+    //     return
+    // }
     playerPattern = [];
     compTurn = true;
     playerRound += 1;
-    document.querySelector('#message').innerHTML = 'Round';
+    flashes = 0;
+    document.querySelector('#message').innerHTML = 'Watch my pattern';
     getRandom();
-    computerTurn();
+    setTimeout(() => computerTurn(), 1000);
     render();
-    // if (winGame = true) {
-    //     playerRound = 0;
-    // }
+}
+function resetGame() {
+    playerPattern = [];
+    compPattern = [];
+    playerRound = 0;
+    flashes = 0;
+    compTurn = true
 }
 
 function computerTurn(){
@@ -82,17 +98,9 @@ function computerTurn(){
         runCompPattern();
     },1000)
     //players turn to match pattern
+    playerTurn = true;
     matchPattern();
 }
-    
-function nextRound() {
-    getRandom();
-    playerPattern = [];
-    runCompPattern();
-    console.log(compPattern);
-    //runCompPattern();
-}
-
 function runCompPattern() {
     if (compTurn) { 
         delayFlash(compPattern);
@@ -103,27 +111,29 @@ function getRandom() {
 }
 function matchPattern() {
     if(compPattern.length!=playerPattern.length) {
-        wrongMove = true;
+        //wrongMove = true;
         // document.querySelector('#message').innerHTML = 'Wrong! Watch and try again'
         // runCompPattern();
     } else { 
         // comapring each element of array 
         for(let i=0;i<compPattern.length;i++) 
         if(compPattern[i]!=playerPattern[i]) {
-            // if strict = true => round = 1
-            // if strict = false => runCompPattern
-            setTimeout(() => runCompPattern(), 1000);
+            //wrongMove = true;
             playerPattern = [];
             document.querySelector('#message').innerHTML = 'Wrong! Watch and try again'
+            multiFlash();
+            window.setTimeout(flashes = 0, 1000);
+            setTimeout(() => runCompPattern(), 1500);
         } else {
-             
+            window.setTimeout(flashLights(), 400);
             document.querySelector('#message').innerHTML = `Correct! Start Round: ${playerRound + 1}`;
-            // setTimeout(() => document.querySelector('#message').innerHTML = `<h1>Round</h1>`, 400);
         }
-        if (playerRound === totalRounds) {
+        if (playerRound === totalRounds && wrongMove === false) {
             winGame = true;
             document.querySelector('#message').innerHTML = `You completed all ${playerRound} rounds!`;
             flashLights();
+            playerRound = 0;
+            compPattern = [];
         }
     } 
 } 
@@ -143,18 +153,22 @@ function flashColor(i) {
 function redFlash() {
     red.classList.replace('off', 'on');
     setTimeout(() => lightsOff(), 400);
+    redSound.play();
 }
 function blueFlash() {
     blue.classList.replace('off', 'on');
     setTimeout(() => lightsOff(), 400);
+    blueSound.play();
 }
 function yellowFlash() {
     yellow.classList.replace('off', 'on');
     setTimeout(() => lightsOff(), 400);
+    yellowSound.play();
 }
 function greenFlash() {
     green.classList.replace('off', 'on');
     setTimeout(() => lightsOff(), 400);
+    greenSound.play();
 }
 function lightsOff() {
     red.classList.replace('on', 'off');
@@ -168,9 +182,16 @@ function lightsOn() {
     yellow.classList.replace('off', 'on');
     green.classList.replace('off', 'on');
 }
-function flashLights() {
+function flashLights(duration) {
     lightsOn();
-    setTimeout(() => lightsOff(), 800);
+    setTimeout(() => lightsOff(), duration);
+}
+function multiFlash() {
+    if (flashes < 3) {
+        flashes++
+        window.setTimeout(multiFlash, 200);
+    }
+    flashLights()
 }
 function gameOver() {
     document.querySelector('message').innerHTML = `<h1>Game Over! <br>You reached level ${playerRound} <br>Try Again?</h1>`;
@@ -180,5 +201,6 @@ function gameOver() {
     playerTurn = false;
 }
 function render() {
-    round.textContent = playerRound;
+    round.textContent = `Round ${playerRound}`;
 }
+
