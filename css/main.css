@@ -4,10 +4,16 @@
     grid-template-rows: 200px 200px;
     grid-template-areas: 
         "tl tr"
-        "bl br";
-
+        "bl br";        
+}
+#message {
+    font-size: 5vmin;
 }
 
+button {
+    height: 5vmin;
+    width: 10vmin;
+}
 .lights {
     height: 200px;
     width: 200px;

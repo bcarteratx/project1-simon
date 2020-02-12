@@ -1,8 +1,9 @@
 /*----- variables -----*/
 let compPattern = [];
 let playerPattern = [];
-let playerRound = 1;
+let playerRound = 0;
 let compTurn;
+let playerTurn;
 let totalRounds = 3;
 let strict = false;
 let winGame = false;
@@ -59,14 +60,18 @@ function clickedGreen() {
 
 /*----- functions -----*/
 function startGame() {
-    playerPattern = [];
-    compTurn = true;
-    playerRound = 1;
-    getRandom();
     //all lights flash to indicate game start
     flashLights();
+    playerPattern = [];
+    compTurn = true;
+    playerRound += 1;
+    document.querySelector('#message').innerHTML = 'Round';
+    getRandom();
     computerTurn();
     render();
+    // if (winGame = true) {
+    //     playerRound = 0;
+    // }
 }
 
 function computerTurn(){
@@ -77,15 +82,7 @@ function computerTurn(){
         runCompPattern();
     },1000)
     //players turn to match pattern
-    //wait then run matchPattern();
-    for (var i=0;i<compPattern.length;i++) {
-        if (playerPattern[i] !== compPattern[i]) {
-            wrongMove = true;
-            runCompPattern();
-        } else {
-            setTimeout(() => nextRound(), 1000);
-        }
-    }
+    matchPattern();
 }
     
 function nextRound() {
@@ -106,7 +103,9 @@ function getRandom() {
 }
 function matchPattern() {
     if(compPattern.length!=playerPattern.length) {
-        return "False";
+        wrongMove = true;
+        // document.querySelector('#message').innerHTML = 'Wrong! Watch and try again'
+        // runCompPattern();
     } else { 
         // comapring each element of array 
         for(let i=0;i<compPattern.length;i++) 
@@ -115,13 +114,16 @@ function matchPattern() {
             // if strict = false => runCompPattern
             setTimeout(() => runCompPattern(), 1000);
             playerPattern = [];
+            document.querySelector('#message').innerHTML = 'Wrong! Watch and try again'
         } else {
-            playerRound += 1; 
-            render();
-            return true;
+             
+            document.querySelector('#message').innerHTML = `Correct! Start Round: ${playerRound + 1}`;
+            // setTimeout(() => document.querySelector('#message').innerHTML = `<h1>Round</h1>`, 400);
         }
         if (playerRound === totalRounds) {
             winGame = true;
+            document.querySelector('#message').innerHTML = `You completed all ${playerRound} rounds!`;
+            flashLights();
         }
     } 
 } 
@@ -169,6 +171,13 @@ function lightsOn() {
 function flashLights() {
     lightsOn();
     setTimeout(() => lightsOff(), 800);
+}
+function gameOver() {
+    document.querySelector('message').innerHTML = `<h1>Game Over! <br>You reached level ${playerRound} <br>Try Again?</h1>`;
+    userArray =[];
+    gameArray =[];
+    count = 0;
+    playerTurn = false;
 }
 function render() {
     round.textContent = playerRound;
