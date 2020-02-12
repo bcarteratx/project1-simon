@@ -1,7 +1,7 @@
 body {
     text-align: center;
     background-color: black;
-    color: white;
+    color: rgba(255, 255, 255, 0.795);
 }
 
 .outer {
@@ -15,7 +15,7 @@ body {
     position: relative;
     display: grid;
     margin: 0 auto;
-    gap: 15vmin;
+    gap: 10vmin;
     grid-template-columns: 200px 200px;
     grid-template-rows: 200px 200px;
     grid-template-areas: 
@@ -28,8 +28,8 @@ body {
 }
 
 button {
-    height: 10vmin;
-    width: 10vmin;
+    height: 15vmin;
+    width: 15vmin;
     border-radius: 50%;
     background-color: rgba(156, 156, 156, 0.87);
 }
