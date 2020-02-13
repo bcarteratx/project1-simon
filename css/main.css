@@ -1,26 +1,31 @@
 body {
+    display: grid;
     text-align: center;
     background-color: black;
     color: rgba(255, 255, 255, 0.795);
 }
 
-.outer {
-    height: 100%;
+.container {
     display: flex;
-    align-items: center;
     justify-content: center;
+    align-items: center;
+    height: 100%;
+    margin: 0;
+    justify-items: center;
 }
 
 .game {
+    animation-duration: 1s;
     position: relative;
     display: grid;
     margin: 0 auto;
-    gap: 10vmin;
-    grid-template-columns: 200px 200px;
-    grid-template-rows: 200px 200px;
+    gap: -60vmin;
+    grid-template-columns: auto auto auto;
+    grid-template-rows: repeat(3, auto);
     grid-template-areas: 
-        "tl tr"
-        "bl br";        
+    "tl . tr"
+    ". ctr ."
+    "bl . br";        
 }
 
 #message {
@@ -28,6 +33,7 @@ body {
 }
 
 button {
+    grid-area: ctr;
     height: 15vmin;
     width: 15vmin;
     border-radius: 50%;
@@ -46,33 +52,41 @@ button {
 .red.off {
     grid-area: tl;
     background: rgba(245, 31, 31, .8);
+    border: 3vmin solid red;
 }
 .blue.off {
     grid-area: tr;
     background: rgba(31, 31, 224, .8);
+    border: 3vmin solid rgba(31, 31, 224, .8);;
 }
 .yellow.off {
     grid-area: bl;
     background: rgba(255, 226, 62, 0.8);
+    border: 3vmin solid rgba(255, 226, 62, 0.8);
 }
 .green.off {
     grid-area: br;
     background: rgba(16, 146, 16, .8);
+    border: 3vmin solid rgba(16, 146, 16, .8);
 }
 
 .red.on {
     grid-area: tl;
-    background: lightcoral;
+    background: rgb(255, 146, 146);
+    border: 3vmin solid rgb(255, 175, 175);
 }
 .blue.on {
     grid-area: tr;
     background: lightskyblue;
+    border: 3vmin solid rgb(164, 220, 255);
 }
 .yellow.on {
     grid-area: bl;
-    background: lightgoldenrodyellow;
+    background: rgb(255, 255, 186);
+    border: 3vmin solid rgb(255, 255, 220);
 }
 .green.on {
     grid-area: br;
     background: lightgreen;
+    border: 3vmin solid rgb(185, 248, 185);
 }

@@ -12,6 +12,7 @@ let intervalTime;
 let flashes = 1;
 
 /*----- cached element references -----*/
+const game = document.querySelector('.game');
 const red = document.querySelector('.red');
 const blue = document.querySelector('.blue');
 const yellow = document.querySelector('.yellow');
@@ -33,7 +34,6 @@ blue.addEventListener('click', clickedBlue);
 yellow.addEventListener('click', clickedYellow);
 green.addEventListener('click', clickedGreen);
 startButton.addEventListener('click', startGame);
-strictButton.addEventListener('click', handleStrict);
 
 /*----- eventHandlers -----*/
 function handleStrict() {
@@ -75,7 +75,7 @@ function resetGame() {
 
 function startGame() {
     if (playerRound < 1) {
-        flashLights(800);
+        flashLights(500);
     }
     // if (playerTurn) {
     //     return
@@ -86,14 +86,14 @@ function startGame() {
     flashes = 0;
     document.querySelector('#message').innerHTML = 'Watch the pattern';
     getRandom();
-    setTimeout(() => computerTurn(), 1000);
+    setTimeout(() => computerTurn(), 500);
     render();
 }
 
 function computerTurn(){
     //light up elements by compPattern
     compTurn = true;
-    setTimeout(() => runCompPattern(), 1000);
+    setTimeout(() => runCompPattern(), 500);
     //players turn to match pattern
     playerTurn = true;
     matchPattern();
@@ -113,7 +113,7 @@ function matchPattern() {
             document.querySelector('#message').innerHTML = 'Wrong! Watch and try again'
             multiFlash();
             setTimeout(() => flashes = 0, 1000);
-            setTimeout(() => runCompPattern(), 1500);
+            setTimeout(() => runCompPattern(), 1000);
         } else {
             //window.setTimeout(flashLights(), 400);
             document.querySelector('#message').innerHTML = `Correct! Start Round: ${playerRound + 1}`;
