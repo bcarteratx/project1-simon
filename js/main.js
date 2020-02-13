@@ -10,6 +10,8 @@ let winGame = false;
 let wrongMove = false;
 let intervalTime;
 let flashes = 1;
+var confettiSettings = {target: 'my-canvas' };
+var confetti = new ConfettiGenerator(confettiSettings);
 
 /*----- cached element references -----*/
 const game = document.querySelector('.game');
@@ -36,9 +38,9 @@ green.addEventListener('click', clickedGreen);
 startButton.addEventListener('click', startGame);
 
 /*----- eventHandlers -----*/
-function handleStrict() {
-    (strictButton.checked == true) ? strict = true : strict = false; 
-}
+// function handleStrict() {
+//     (strictButton.checked == true) ? strict = true : strict = false; 
+// }
 
 function clickedRed() {
     playerPattern.push(1);
@@ -100,7 +102,7 @@ function computerTurn(){
 }
 
 function matchPattern() {
-    if(compPattern.length!=playerPattern.length) {
+    if(compPattern.length !== playerPattern.length) {
         //wrongMove = true;
         // document.querySelector('#message').innerHTML = 'Wrong! Watch and try again'
         // runCompPattern();
@@ -112,18 +114,20 @@ function matchPattern() {
             playerPattern = [];
             document.querySelector('#message').innerHTML = 'Wrong! Watch and try again'
             multiFlash();
+            const gameElement = document.querySelector('.game');
+            game.classList.add('animated', 'shake');
+            setTimeout(() => game.classList.remove('animated', 'shake'), 1000);
             setTimeout(() => flashes = 0, 1000);
             setTimeout(() => runCompPattern(), 1000);
         } else {
-            //window.setTimeout(flashLights(), 400);
             document.querySelector('#message').innerHTML = `Correct! Start Round: ${playerRound + 1}`;
         }
         if (playerRound === totalRounds && wrongMove === false) {
             winGame = true;
             document.querySelector('#message').innerHTML = `You completed all ${playerRound} rounds!`;
-            flashLights();
             playerRound = 0;
             compPattern = [];
+            confetti.render();
         }
     } 
 } 
@@ -202,14 +206,6 @@ function multiFlash() {
         window.setTimeout(multiFlash, 200);
     }
     flashLights()
-}
-
-function gameOver() {
-    document.querySelector('message').innerHTML = `<h1>Game Over! <br>You reached level ${playerRound} <br>Try Again?</h1>`;
-    userArray =[];
-    gameArray =[];
-    count = 0;
-    playerTurn = false;
 }
 
 function render() {

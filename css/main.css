@@ -92,3 +92,8 @@ button {
     background: lightgreen;
     border: 3vmin solid rgb(185, 248, 185);
 }
+
+#my-canvas {
+    float: left;
+    position: fixed;
+}
