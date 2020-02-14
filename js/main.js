@@ -8,10 +8,9 @@ let totalRounds = 20;
 let strict = false;
 let winGame = false;
 let wrongMove = false;
-let intervalTime;
 let flashes = 1;
-var confettiSettings = {target: 'my-canvas' };
-var confetti = new ConfettiGenerator(confettiSettings);
+let confettiSettings = {target: 'my-canvas' };
+let confetti = new ConfettiGenerator(confettiSettings);
 
 /*----- cached element references -----*/
 const game = document.querySelector('.game');
@@ -125,7 +124,7 @@ function matchPattern() {
             playerRound = 0;
             compPattern = [];
             confetti.render();
-            multiFlash(20, 400)
+            winSequence();
         }
     } 
 } 
@@ -208,4 +207,10 @@ function multiFlash(num, duration) {
 
 function render() {
     round.textContent = `${playerRound}`;
+}
+
+function winSequence() {
+    compPattern = [1, 2, 4, 3, 1, 2, 4, 3, 1, 2, 4, 3];
+    runCompPattern();
+    setTimeout(compPattern = [], 12000);
 }
