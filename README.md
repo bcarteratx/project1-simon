@@ -9,19 +9,37 @@
 ##
 ##
 ## Motivation:
-### I first played Simon as a young child and was instantly drawn in by the lights and sounds, and captivated by the challenge of repeating the pattern in the correct sequence. Now as an adult I better apreciate how this simple but not easy game can help improve short-term memory and attention.
-## Prototype View:
+### I first played Simon as a young child and was instantly drawn in by the lights and sounds, and captivated by the challenge of repeating the pattern in the correct sequence. Now as an adult I better apreciate how this simple but challenging game can help improve attention and short-term memory.
+## Prototype:
 ### Here is an initial wire-frame of how I wandted the game look and play like:
 ![Simon Wireframe](assets/wireframe.png)
+##
+##
+## Finished Game:
+### Screen shots of the completed game:
+![Simon Screen-Intro](assets/Screen-Intro.png)
+##
+##
+![Simon Screen-Play](assets/Screen-Play.png)
+##
+##
+![Simon Screen-Win](assets/Screen-Win.png)
+##
+##
+##
 ## Technology Implemented:
 - JavaScript
 - CSS
 - HTML
 - Git 
 - animate.css
+- confetti.js
 
 ## Credits:
-- Delaying Array Loop Tutorial https://travishorn.com/delaying-foreach-iterations-2ebd4b29ad30 Travis Horn
+- animate.css https://daneden.github.io/animate.css/ Daniel Eden
+- confetti-js https://github.com/Agezao/confetti-js#readme Agezao
+- sound files https://www.freecodecamp.org/learn/ freecodecamp
+   
 
 ## Pseudocode:
 This game starts by flashing a sequence, initially with one flash. The player then needs to click the same button that flashed to advance to the next round. If the player does not hit the right button the round restarts. Advancing to the next round adds one more step to the pattern. If the player advances through all 20 rounds they win the game.
@@ -58,7 +76,8 @@ This game starts by flashing a sequence, initially with one flash. The player th
 - As a user, if I complete 20 rounds I should win the game.
 
 ## Stretch Goals:
-- Animate wrong button press
+- ~~Animate wrong button press~~
+- ~~Add confetti to win screen~~
 - Add strict mode to restart from round 1 when player makes a wrong move
 - Add hard mode increase game speed with rounds completed
-- different sound options (record my own)
+- different sound options (record my own custom sounds)
