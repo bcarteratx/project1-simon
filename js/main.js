@@ -4,7 +4,7 @@ let playerPattern = [];
 let playerRound = 0;
 let compTurn;
 let playerTurn;
-let totalRounds = 3;
+let totalRounds = 20;
 let strict = false;
 let winGame = false;
 let wrongMove = false;
@@ -207,5 +207,5 @@ function multiFlash(num, duration) {
 }
 
 function render() {
-    round.textContent = `Round ${playerRound}`;
+    round.textContent = `${playerRound}`;
 }

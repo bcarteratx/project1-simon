@@ -29,6 +29,10 @@ body {
     "bl . br";        
 }
 
+#round {
+    font-size: 8vmin;
+}
+
 #message {
     font-size: 5vmin;
 }
