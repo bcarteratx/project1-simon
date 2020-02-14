@@ -61,23 +61,19 @@ button {
 
 .red.off {
     grid-area: tl;
-    background: rgba(245, 31, 31, .8);
-    border: 3vmin solid rgba(255, 0, 0, .8);
+    border: 3vmin solid rgba(255, 0, 0, .7);
 }
 .blue.off {
     grid-area: tr;
-    background: rgba(31, 31, 224, .8);
-    border: 3vmin solid rgba(31, 31, 224, .8);;
+    border: 3vmin solid rgba(31, 31, 224, .7);;
 }
 .yellow.off {
     grid-area: bl;
-    background: rgba(255, 226, 62, 0.8);
-    border: 3vmin solid rgba(255, 226, 62, .8);
+    border: 3vmin solid rgba(255, 226, 62, .7);
 }
 .green.off {
     grid-area: br;
-    background: rgba(16, 146, 16, .8);
-    border: 3vmin solid rgba(16, 146, 16, .8);
+    border: 3vmin solid rgba(16, 146, 16, .7);
 }
 
 .red.on {

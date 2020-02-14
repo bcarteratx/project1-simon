@@ -79,9 +79,6 @@ function startGame() {
     if (playerRound < 1) {
         flashLights(500);
     }
-    // if (playerTurn) {
-    //     return
-    // }
     playerPattern = [];
     compTurn = true;
     playerRound += 1;
