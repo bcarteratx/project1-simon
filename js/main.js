@@ -2,12 +2,8 @@
 let compPattern = [];
 let playerPattern = [];
 let playerRound = 0;
-let compTurn;
-let playerTurn;
 let totalRounds = 20;
-let strict = false;
 let winGame = false;
-let wrongMove = false;
 let flashes = 1;
 let confettiSettings = {target: 'my-canvas' };
 let confetti = new ConfettiGenerator(confettiSettings);
@@ -21,7 +17,6 @@ const green = document.querySelector('.green');
 const message = document.querySelector('#message');
 const round = document.querySelector('#round');
 const startButton = document.querySelector('#start');
-const strictButton = document.querySelector("#strict");
 
 /*---- sound files ----*/
 const redSound = new Audio('https://s3.amazonaws.com/freecodecamp/simonSound1.mp3');
@@ -37,10 +32,6 @@ green.addEventListener('click', clickedGreen);
 startButton.addEventListener('click', startGame);
 
 /*----- eventHandlers -----*/
-// function handleStrict() {
-//     (strictButton.checked == true) ? strict = true : strict = false; 
-// }
-
 function clickedRed() {
     playerPattern.push(1);
     redFlash();
@@ -66,20 +57,11 @@ function clickedGreen() {
 }
 
 /*----- functions -----*/
-function resetGame() {
-    playerPattern = [];
-    compPattern = [];
-    playerRound = 0;
-    flashes = 0;
-    compTurn = true
-}
-
 function startGame() {
     if (playerRound < 1) {
         flashLights(500);
     }
     playerPattern = [];
-    compTurn = true;
     playerRound += 1;
     flashes = 0;
     document.querySelector('#message').innerHTML = 'Watch the pattern';
@@ -90,23 +72,20 @@ function startGame() {
 
 function computerTurn(){
     //light up elements by compPattern
-    compTurn = true;
     setTimeout(() => runCompPattern(), 500);
+    playerTurn();
+}
+
+function playerTurn() {
     //players turn to match pattern
-    playerTurn = true;
     matchPattern();
 }
 
 function matchPattern() {
-    if(compPattern.length !== playerPattern.length) {
-        //wrongMove = true;
-        // document.querySelector('#message').innerHTML = 'Wrong! Watch and try again'
-        // runCompPattern();
-    } else { 
+    if(compPattern.length === playerPattern.length) {
         // comapring each element of array 
         for(let i=0;i<compPattern.length;i++) 
         if(compPattern[i]!=playerPattern[i]) {
-            //wrongMove = true;
             playerPattern = [];
             document.querySelector('#message').innerHTML = 'Wrong! Watch and try again'
             multiFlash(4, 200);
@@ -118,7 +97,7 @@ function matchPattern() {
         } else {
             document.querySelector('#message').innerHTML = `Correct! Start Round: ${playerRound + 1}`;
         }
-        if (playerRound === totalRounds && wrongMove === false) {
+        if (playerRound === totalRounds) {
             winGame = true;
             document.querySelector('#message').innerHTML = `You completed all ${playerRound} rounds!`;
             playerRound = 0;
@@ -134,9 +113,7 @@ function getRandom() {
 }
 
 function runCompPattern() {
-    if (compTurn) { 
         delayFlash(compPattern);
-    }
 }
 
 // delayFlash Function to run through the array with delay
@@ -205,12 +182,12 @@ function multiFlash(num, duration) {
     flashLights()
 }
 
-function render() {
-    round.textContent = `${playerRound}`;
-}
-
 function winSequence() {
     compPattern = [1, 2, 4, 3, 1, 2, 4, 3, 1, 2, 4, 3];
-    runCompPattern();
+    setTimeout(runCompPattern(), 1000);
     setTimeout(compPattern = [], 12000);
+}
+
+function render() {
+    round.textContent = `${playerRound}`;
 }
