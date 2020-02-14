@@ -4,7 +4,7 @@ let playerPattern = [];
 let playerRound = 0;
 let compTurn;
 let playerTurn;
-let totalRounds = 5;
+let totalRounds = 3;
 let strict = false;
 let winGame = false;
 let wrongMove = false;
@@ -113,7 +113,7 @@ function matchPattern() {
             //wrongMove = true;
             playerPattern = [];
             document.querySelector('#message').innerHTML = 'Wrong! Watch and try again'
-            multiFlash();
+            multiFlash(4, 200);
             const gameElement = document.querySelector('.game');
             game.classList.add('animated', 'shake');
             setTimeout(() => game.classList.remove('animated', 'shake'), 1000);
@@ -128,6 +128,7 @@ function matchPattern() {
             playerRound = 0;
             compPattern = [];
             confetti.render();
+            multiFlash(20, 400)
         }
     } 
 } 
@@ -149,7 +150,7 @@ async function delayFlash(array){
     }
 }
 
-// figures out which color to flash for an index in the computer's pattern
+// determines which color to flash for an index in the computer's pattern
 function flashColor(i) {
     if (i === 1) redFlash();
     if (i === 2) blueFlash();
@@ -200,10 +201,10 @@ function flashLights(duration) {
     setTimeout(() => lightsOff(), duration);
 }
 
-function multiFlash() {
-    if (flashes < 3) {
+function multiFlash(num, duration) {
+    if (flashes < num) {
         flashes++
-        window.setTimeout(multiFlash, 200);
+        window.setTimeout(multiFlash, duration);
     }
     flashLights()
 }
@@ -211,4 +212,3 @@ function multiFlash() {
 function render() {
     round.textContent = `Round ${playerRound}`;
 }
-

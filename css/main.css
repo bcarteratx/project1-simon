@@ -3,6 +3,7 @@ body {
     text-align: center;
     background-color: black;
     color: rgba(255, 255, 255, 0.795);
+    font-family: 'Comfortaa', cursive;
 }
 
 .container {
@@ -41,6 +42,13 @@ button {
     outline: none;
 }
 
+#start {
+    background: rgba(194, 194, 194, 0.199);
+    border: .4vmin solid rgba(219, 219, 219, 0.541);
+    font-size: 4vmin;
+    color: rgba(255, 255, 255, 0.692);
+}
+
 .lights {
     height: 30vmin;
     width: 30vmin;
@@ -54,7 +62,7 @@ button {
 .red.off {
     grid-area: tl;
     background: rgba(245, 31, 31, .8);
-    border: 3vmin solid red;
+    border: 3vmin solid rgba(255, 0, 0, .8);
 }
 .blue.off {
     grid-area: tr;
@@ -64,7 +72,7 @@ button {
 .yellow.off {
     grid-area: bl;
     background: rgba(255, 226, 62, 0.8);
-    border: 3vmin solid rgba(255, 226, 62, 0.8);
+    border: 3vmin solid rgba(255, 226, 62, .8);
 }
 .green.off {
     grid-area: br;
