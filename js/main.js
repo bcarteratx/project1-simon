@@ -5,6 +5,7 @@ let playerRound = 0;
 let totalRounds = 20;
 let winGame = false;
 let flashes = 1;
+let interval = 1000;
 let confettiSettings = {target: 'my-canvas' };
 let confetti = new ConfettiGenerator(confettiSettings);
 
@@ -102,6 +103,7 @@ function matchPattern() {
             document.querySelector('#message').innerHTML = `You completed all ${playerRound} rounds!`;
             playerRound = 0;
             compPattern = [];
+            interval = 500;
             confetti.render();
             winSequence();
         }
@@ -119,7 +121,7 @@ function runCompPattern() {
 // delayFlash Function to run through the array with delay
 async function delayFlash(array){
     for(let i=0; i<array.length; i++){
-        await window.setTimeout(flashColor, 1000 *i, array[i])
+        await window.setTimeout(flashColor, interval *i, array[i])
     }
 }
 
@@ -183,7 +185,7 @@ function multiFlash(num, duration) {
 }
 
 function winSequence() {
-    compPattern = [1, 2, 4, 3, 1, 2, 4, 3, 1, 2, 4, 3];
+    compPattern = [0, 1, 2, 4, 3, 1, 2, 4, 3, 1, 2, 4, 3];
     setTimeout(runCompPattern(), 1000);
     setTimeout(compPattern = [], 12000);
 }
